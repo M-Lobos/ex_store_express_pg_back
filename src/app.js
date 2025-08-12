@@ -2,7 +2,6 @@ import express, { urlencoded } from 'express';
 
 import { serverInit } from './services/serverInit.js';
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -10,7 +9,5 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
-
-
-//levantamiento servidor
-serverInit(app, PORT)
+//levantamiento servidor y conexión de DB
+serverInit(app, PORT);

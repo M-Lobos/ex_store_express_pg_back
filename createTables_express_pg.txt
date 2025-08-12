@@ -1,0 +1,50 @@
+import { query } from "../../config/db.config"
+
+export const createUserTable = async () => {
+    try {
+        const queryCreate = `
+            CREATE TABLE IF NOT EXIST nombre_tabla(
+                id UUID PRIMARY KEY,                        (si quierer usar id)
+                col1 VARCHAR(225) NOT NULL,
+                col2 VARCHAR(225) NOT NULL,                 (si quiere también se puede poner UNIQUE)
+                ...
+                colN VARCHAR(225) NOT NULL
+                active BOOLEAN DEFAULT TRUE
+            );`;
+
+        const { rows } = await query(queryCreate);
+
+        return rows
+
+    } catch (error) {
+        console.error(`Error al crear la tabla usuarios. Error: ${error}`)              reempplazar por manejador de errores.
+    }
+}
+
+
+______________________________________________________________________________
+
+consulta de info de tabla creada/existente mediante el diccionario de SQL
+
+export const getTableDetails = async () => {
+    try {
+        const queryDictionaty = (`
+        SELECT                                  campos de información de mi interés
+            column_name,
+            data_type,
+            column_default,
+            is_nullable,
+            is_unique 
+        FROM 
+            information_schema.columns          columna de donde los obtiene de SQL
+        WHERE
+            table_name = $1                     se le pasa el nombre de la tabla como parámetro a la consulta
+        ORDER BY
+            ordinal_position                    para que mantenga el orden original con el que se crean las columnas de la tabla
+        `)
+
+        await query(queryDictionaty)
+    } catch (error) {
+
+    }
+}
