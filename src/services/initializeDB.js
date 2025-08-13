@@ -1,20 +1,13 @@
-import {
-    createAddressTable,
-    createProducsTable,
-    createSalesProductsTable,
-    createSalesTable,
-    createUserTable
-} from "../utils/db/createDBTables.js"
+import { createDBTable } from "../utils/db/createDBTables.js"
+import { createTableQueries } from "../utils/constants/createTableQueries.js"
 
 import { connectDB } from "../utils/db/connectDB.js"
 
 export const initializeDB = async () => {
     try {
-        await createUserTable();
-        await createAddressTable();
-        await createProducsTable();
-        await createSalesTable();
-        await createSalesProductsTable();
+        for (const query of createTableQueries) {
+            await createDBTable(query)
+        }
 
         console.log('Tablas cargadas con éxito')
 
