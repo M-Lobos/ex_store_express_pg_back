@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { query } from "../config/db.config.js";
+import { DataBaseError } from "../errors/TypesOfErrors.js";
 
 export class Usuario {
     constructor({ id, nombre, apellido_paterno, apellido_materno, email, telefono }) {
@@ -30,8 +31,7 @@ export class Usuario {
             return rows[0];
 
         } catch (error) {
-            console, error(`Error al crear el usuario en la DB de PostgreSQL`, error.message);
-
+            throw new DataBaseError('Error al registrar el usuario en la base datos', error)
         }
     }
 };

@@ -1,7 +1,6 @@
 import { Usuario } from "../models/Usuario.model.js"
 
-
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
     try {
         const user = await Usuario.create(req.body)
 
@@ -12,12 +11,6 @@ export const createUser = async (req, res) => {
         })
 
     } catch (error) {
-        console.log("entro en el catch del controlador")
-
-        res.status(500).json({
-            message: 'No pudimos crear el usuario, error desde controlador',
-            status: 500,
-
-        })
+        next(error)
     }
 }

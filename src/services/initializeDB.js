@@ -1,5 +1,6 @@
-import { createDBTable } from "../utils/db/createDBTables.js"
-import { createTableQueries } from "../utils/constants/createTableQueries.js"
+import { createDBTable } from "../utils/db/createDBTables.js";
+import { createTableQueries } from "../utils/constants/createTableQueries.js";
+import { DataBaseError } from "../errors/TypesOfErrors.js";
 
 import { connectDB } from "../utils/db/connectDB.js"
 
@@ -15,6 +16,6 @@ export const initializeDB = async () => {
         console.log(`Conexión exitosa realizada al ${now}`);
 
     } catch (error) {
-        console.error(`Error al inicializar la base de datos en PostgreSQL`)
+        throw new DataBaseError(`Error al inicializar la base de datos en PostgreSQL`, error)
     }
 }

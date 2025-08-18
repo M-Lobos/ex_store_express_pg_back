@@ -1,4 +1,5 @@
 import { query } from "../../config/db.config.js"
+import { DataBaseError } from "../../errors/TypesOfErrors.js";
 import { getTableDetails, tableExists } from "./tableDetails.js";
 
 export const createDBTable = async ({ queryText, name }) => {
@@ -15,7 +16,7 @@ export const createDBTable = async ({ queryText, name }) => {
 
         console.table(tableDetails);
     } catch (error) {
-        console.error(`Error al crear la tabla usuarios. Error: ${error}`)
+        throw new DataBaseError(`Error al crear la tabla ${name}`, error)
     }
 }
 
