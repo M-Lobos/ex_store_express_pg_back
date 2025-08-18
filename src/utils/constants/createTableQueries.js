@@ -8,7 +8,7 @@ export const createTableQueries = [
                 apellido_paterno VARCHAR(225) NOT NULL,
                 apellido_materno VARCHAR(225) NOT NULL,
                 email VARCHAR(225) NOT NULL UNIQUE,
-                phone VARCHAR(12) NOT NULL,
+                telefono VARCHAR(12) NOT NULL,
                 active BOOLEAN DEFAULT TRUE
             );
             `
