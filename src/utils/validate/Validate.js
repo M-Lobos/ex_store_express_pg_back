@@ -11,7 +11,7 @@ export class Validation {
 
     static ValidateName(value, fieldName) {
         const regex = /^[a-zA-ZÁ-ÿñÑ\s]+$/
-        if (regex.test(value)) {
+        if (!regex.test(value)) {
             throw new ValidationError(`${fieldName} debe contener sólo letras`);
         }
         return value
@@ -19,7 +19,7 @@ export class Validation {
 
     static email(value) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
-        if (emailRegex.test(value)) {
+        if (!emailRegex.test(value)) {
             throw new ValidationError(`${value} debe ser un email válido`);
         }
         return value
@@ -69,7 +69,13 @@ export class Validation {
     static isBoolean(value, fieldName) {
         if (typeof (value) !== 'boolean') throw new ValidationError(`${fieldName} debe ser un Booleano; verdadero o falso`)
         return value;
+    }
 
+    static phone(value) {
+        const regexPhone = /^(?:(?:\\+56|56)?9|0)(?:\\s?\\d){8}$/;
+        if (!regexPhone.test(value)) throw new ValidationError(`Debes ingresar un número de teléfono válido en Chile`)
+
+        return value;
     }
 }
 
