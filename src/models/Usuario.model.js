@@ -19,6 +19,7 @@ export class Usuario {
 
         const { nombre, apellido_paterno, apellido_materno, email, telefono } = data;
         let nombreValido, apellido_paternoValido, apellido_maternoValido, emailValido, telefonoValido;
+
         //validation nombre
         try {
             nombreValido = Validation.isNotEmpty(nombre, 'nombre');
@@ -67,15 +68,13 @@ export class Usuario {
             apellido_materno: apellido_maternoValido,
             email: emailValido,
             telefono: telefonoValido,
-
         }
-
     }
 
     static async create(data) {
         try {
 
-            Usuario.validate(data);
+          /*   Usuario.validate(data); */
 
             const { nombre, apellido_paterno, apellido_materno, email, telefono } = data;
             const id = uuidv4();

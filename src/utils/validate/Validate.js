@@ -4,7 +4,7 @@ export class Validation {
 
     static isNotEmpty(value, fieldName) {
         if (typeof value !== 'string' || value.trim() === '') {
-            throw new ValidationError(`${fieldName} no puede ser una cadena de texto vacía.`, error);
+            throw new ValidationError(`El campo '${fieldName}' no puede ser una cadena de texto vacía.`);
         }
         return value
     }
@@ -12,7 +12,7 @@ export class Validation {
     static ValidateName(value, fieldName) {
         const regex = /^[a-zA-ZÁ-ÿñÑ\s]+$/
         if (!regex.test(value)) {
-            throw new ValidationError(`${fieldName} debe contener sólo letras`);
+            throw new ValidationError(`El campo '${fieldName}'debe contener sólo letras`);
         }
         return value
     }
@@ -20,15 +20,15 @@ export class Validation {
     static email(value) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
         if (!emailRegex.test(value)) {
-            throw new ValidationError(`${value} debe ser un email válido`);
+            throw new ValidationError(`El campo '${value}' debe ser un email válido`);
         }
         return value
     }
 
     static isNumberInRange(value, min, max, fieldName) {
         const number = Number(value);
-        if (isNaN(number)) throw new ValidationError(`${fieldName} debe ser un número`);
-        if (min > number > max) throw new ValidationError(`${fieldName} debe estar entre ${min} y ${max}`);
+        if (isNaN(number)) throw new ValidationError(`El campo '${fieldName}' debe ser un número`);
+        if (min > number > max) throw new ValidationError(`El campo '${fieldName}' debe estar entre ${min} y ${max}`);
 
         return number
     }
@@ -37,7 +37,7 @@ export class Validation {
     static isPositiveInteger(value, fieldName) {
         const number = Number(value);
         if (!Number.isInteger(number) || number <= 0) {
-            throw new ValidationError(`${fieldName} debe ser un número entero positivo mayor a cero`)
+            throw new ValidationError(`El campo '${fieldName}' debe ser un número entero positivo mayor a cero`)
         }
     }
 
@@ -45,7 +45,7 @@ export class Validation {
     static isNegativeInteger(value, fieldName) {
         const number = Number(value);
         if (!Number.isInteger(number) || number < 0) {
-            throw new ValidationError(`${fieldName} debe ser un número entero positivo o cero`)
+            throw new ValidationError(`El campo '${fieldName}' debe ser un número entero positivo o cero`)
         }
     }
 
@@ -53,7 +53,7 @@ export class Validation {
     static isValidDate(value, fieldName) {
         const date = new Date(value);
 
-        if (isNaN(date.getTime())) throw new ValidationError(`${fieldName} debe ser una fecha válida (YYYY-MM-DD)`)
+        if (isNaN(date.getTime())) throw new ValidationError(`El campo '${fieldName}' debe ser una fecha válida (YYYY-MM-DD)`)
         return date
     }
 
@@ -61,19 +61,19 @@ export class Validation {
     static postalCode(value, fieldName) {
         const regex = /^\d{7}S/
 
-        if (!regex.test(value)) throw new ValidationError(`${fieldName} debe ser un código postal de 7 digitos`)
+        if (!regex.test(value)) throw new ValidationError(`El campo '${fieldName}' debe ser un código postal de 7 digitos`)
         return value;
     }
 
     //Para validar valores Booleanos
     static isBoolean(value, fieldName) {
-        if (typeof (value) !== 'boolean') throw new ValidationError(`${fieldName} debe ser un Booleano; verdadero o falso`)
+        if (typeof (value) !== 'boolean') throw new ValidationError(`El campo '${fieldName}' debe ser un Booleano; verdadero o falso`)
         return value;
     }
 
     static phone(value) {
-        const regexPhone = /^(?:(?:\\+56|56)?9|0)(?:\\s?\\d){8}$/;
-        if (!regexPhone.test(value)) throw new ValidationError(`Debes ingresar un número de teléfono válido en Chile`)
+        const regexPhone = /^\+?569\d{8}$/;
+        if (!regexPhone.test(value)) throw new ValidationError(`El número '${value}'no es válido. Debes ingresar un número de teléfono válido en Chile`)
 
         return value;
     }
