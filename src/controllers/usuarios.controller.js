@@ -14,3 +14,17 @@ export const createUser = async (req, res, next) => {
         next(error)
     }
 }
+
+export const findAllActiveUsers = async (req, res, next) => {
+    try {
+        const users = await Usuario.findAllActive()
+
+        res.status(200).json({
+            message: 'Registros de usuarios activos encontrados',
+            status: 200,
+            data: users
+        })
+    } catch (error) {
+        next(error)
+    }
+}

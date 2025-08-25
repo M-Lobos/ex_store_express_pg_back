@@ -29,3 +29,24 @@ export const createRecord = async (tableName, data) => {
     }
 }
 
+/**
+ * Obtiene todos los registros activos de una tabla consultada
+ * @param {string} tableName    - Nombre de la tabla a consultar
+ * @returns {Promise<Array>}    - Retorna un arreglo de forma asíncrona de todos los resgistros de la tabla
+ */
+
+export const findAllActiveRecords = async (tableName) => {
+    try {
+
+        const selectQuery = `
+            SELECT * FROM ${tableName}
+            WHERE active = true;
+        `
+
+        const { rows } = await query(selectQuery);
+        return rows
+
+    } catch (error) {
+        throw new InternalServerError(`Error al obtener datos en la tabla ${tableName}`)
+    }
+}
