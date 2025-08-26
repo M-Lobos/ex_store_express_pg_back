@@ -47,6 +47,29 @@ export const findAllActiveRecords = async (tableName) => {
         return rows
 
     } catch (error) {
-        throw new InternalServerError(`Error al obtener datos en la tabla ${tableName}`)
+        throw new InternalServerError(`Error al obtener resgristros de las tablas ${tableName}`)
+    }
+}
+
+/**
+ * Obtiene un registro que esté activo, a través de un id {UUID} dado para una tabla en particular
+ * @param {string} tableName - tabla que se desea consultar
+ * @param {string} id        - id {UUID} del registro que se busca
+ * @returns {Promise<Object>} - Retorna un registro basado en el id {UUID} y que esté activo
+ */
+
+export const findActiveRecordById = async (tableName, id) => {
+    try {
+        const selectQuery = `
+            SELECT * FROM ${tableName}
+            WHERE id = $1
+            AND active = true
+        `
+        const { rows } = await query(selectQuery, [id]);
+        return rows[0];
+
+    } catch (error) {
+
+        throw new InternalServerError(`Error al obtener registro ${id} en la tabla ${tableName}`)
     }
 }

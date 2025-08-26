@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { DataBaseError, ValidationError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
-import { createRecord, findAllActiveRecords } from "../utils/CRUD/crudUtils.js";
+import { createRecord, findActiveRecordById, findAllActiveRecords } from "../utils/CRUD/crudUtils.js";
 
 export class Usuario {
     constructor({ id, nombre, apellido_paterno, apellido_materno, email, telefono }) {
@@ -86,7 +86,7 @@ export class Usuario {
         }
     }
 
-    static async findAllActive(){
+    static async findAllActive() {
         try {
             const users = await findAllActiveRecords('usuarios');
             return users
@@ -94,5 +94,15 @@ export class Usuario {
             throw new DataBaseError('Error al traer los registros de los usuarios en la base datos', error)
         }
     }
+
+    static async findActiveByid(id) {
+        try {
+            const userByid = await findActiveRecordById('usuarios', id);
+            return userByid
+        } catch (error) {
+            throw new DataBaseError(`Error al encontrar el resgirstro de ${id} en la base datos`, error)
+        }
+    }
+
 
 };
