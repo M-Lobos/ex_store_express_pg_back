@@ -69,7 +69,46 @@ export const findActiveRecordById = async (tableName, id) => {
         return rows[0];
 
     } catch (error) {
-
         throw new InternalServerError(`Error al obtener registro ${id} en la tabla ${tableName}`)
+    }
+}
+
+
+
+/**
+ * Busca dentro de una tabla en una base datos a través de un filtro simple en formato de objeto y condición SQL AND / OR
+ * @param {string} tableName    - nombre de la tabla que se consulta
+ * @param {object} filters      - objeto con los filtros que contiene nombre el campo, y el valor a buscar  
+ * @param {string} condition    - Condición lógica de búsqueda (AND/OR)
+ * @returns {Promise<Array>}    - retorna un arreglo con los objetos del resultado de la búsqueda
+ */
+
+export const findRecordByFilter = async (tableName, filters, condition) => {
+    console.log("llego a la query en utils")
+    try {
+        const filterKeys = Object.keys(filters);
+        const filterValues = Object.values(filters);
+
+        console.log(filterKeys, filterValues)
+
+        const whereClause = filterKeys.map((key, index) => `${key} = $${index + 1}`).join(` ${condition} `);
+
+        console.log(whereClause)
+
+        /* const whereclauseString = whereClause.join(' AND '); */
+
+        const selectQuery = `
+            SELECT * FROM ${tableName}
+            WHERE ${whereClause}
+        `
+
+        console.log(selectQuery)
+
+        const { rows } = await query(selectQuery, filterValues)
+        console.log(rows)
+        return rows;
+
+    } catch (error) {
+        throw new InternalServerError(`Error al obtener registros solicitados`)
     }
 }

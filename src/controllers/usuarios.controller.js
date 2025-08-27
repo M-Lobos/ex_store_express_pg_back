@@ -44,3 +44,25 @@ export const findUserActiveById = async (req, res, next) => {
         next(error)
     }
 }
+
+export const findUserByFilters = async (req, res, next) => {
+    console.log("llego al controlador")
+    try {
+        const filters = req.query;
+        const { condition } = req.body
+
+        console.log(filters, typeof (filters))
+        console.log(condition, typeof (condition))
+
+        const users = await Usuario.find(filters, condition)
+        console.log(users)
+
+        res.status(200).json({
+            message: `Usuarios encontrados con éxito.`,
+            status: 200,
+            data: users
+        })
+    } catch (error) {
+        next(error)
+    }
+}
