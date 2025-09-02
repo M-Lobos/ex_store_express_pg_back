@@ -84,28 +84,18 @@ export const findActiveRecordById = async (tableName, id) => {
  */
 
 export const findRecordByFilter = async (tableName, filters, condition) => {
-    console.log("llego a la query en utils")
     try {
         const filterKeys = Object.keys(filters);
         const filterValues = Object.values(filters);
 
-        console.log(filterKeys, filterValues)
-
         const whereClause = filterKeys.map((key, index) => `${key} = $${index + 1}`).join(` ${condition} `);
-
-        console.log(whereClause)
-
         /* const whereclauseString = whereClause.join(' AND '); */
 
         const selectQuery = `
             SELECT * FROM ${tableName}
             WHERE ${whereClause}
         `
-
-        console.log(selectQuery)
-
         const { rows } = await query(selectQuery, filterValues)
-        console.log(rows)
         return rows;
 
     } catch (error) {

@@ -104,8 +104,7 @@ export class Usuario {
         }
     }
 
-    static async find(filters, condition) {
-        console.log("llego al modelo")
+    static async find(filters, condition){
         try {
             const users = await findRecordByFilter('usuarios', filters, condition)
             return users
