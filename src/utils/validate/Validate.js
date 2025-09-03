@@ -1,4 +1,4 @@
-import { ValidationError } from "../../errors/TypesOfErrors.js"
+import { NotFoundError, ValidationError, DataBaseError } from "../../errors/TypesOfErrors.js"
 
 export class Validation {
 
@@ -77,5 +77,29 @@ export class Validation {
 
         return value;
     }
+
+    /* static isDataEmptyToDataBase(columns, values) {
+        if (values.length <= 0 || columns.length <= 0) {
+            throw new InternalServerError(`Error: no podemos crear registros vacíos`)
+        }
+        return { columns, values }
+    } */
+
+    static responseIsEmpty(data) {
+
+        if (data.length === 0 || !data) throw new NotFoundError("No es posible encontrar el registro solicitado")
+        return data
+    }
+
+    static isValidFilter(filters, validFields) {
+        const filterKeys = Object.keys(filters);
+
+        for (const key of filterKeys) {
+            if (!validFields.includes(key)) {
+                throw new DataBaseError(`El campo "${key} no es válido para esta entidad`);
+            }
+        }
+    }
+
 }
 

@@ -90,7 +90,7 @@ export const findRecordByFilter = async (tableName, filters, condition) => {
 
         const whereClause = filterKeys.map((key, index) => `${key} = $${index + 1}`).join(` ${condition} `);
         /* const whereclauseString = whereClause.join(' AND '); */
-
+        
         const selectQuery = `
             SELECT * FROM ${tableName}
             WHERE ${whereClause}
@@ -99,6 +99,10 @@ export const findRecordByFilter = async (tableName, filters, condition) => {
         return rows;
 
     } catch (error) {
-        throw new InternalServerError(`Error al obtener registros solicitados`)
+
+        throw new InternalServerError(`
+            Error al consultar la tabla ${tableName} con los filtros:
+            ${JSON.stringify(filters)}
+            `)
     }
 }
