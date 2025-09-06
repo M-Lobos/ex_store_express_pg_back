@@ -38,9 +38,8 @@ export const findUserActiveById = async (req, res, next) => {
     try {
         const { id } = req.params
 
-        const userValidated = Validation.responseIsEmpty(user)
-
         const user = await Usuario.findActiveByid(id);
+        const userValidated = Validation.responseIsEmpty(user)
 
         res.status(200).json({
             message: `Usuario de id ${id} encontrado con éxito.`,
@@ -67,6 +66,26 @@ export const findUserByFilters = async (req, res, next) => {
             status: 200,
             data: userValidated
         });
+    } catch (error) {
+        next(error)
+    }
+
+
+
+}
+
+export const updateUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        const updatedUser = await Usuario.updateUserRecord(id, data)
+
+        res.status(201).json({
+            message: `Usuario actualizado con éxito`,
+            status: 201,
+            data: updatedUser
+        })
     } catch (error) {
         next(error)
     }

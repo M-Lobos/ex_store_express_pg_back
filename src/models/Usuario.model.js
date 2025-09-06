@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { ValidationError, DataBaseError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
-import { createRecord, findActiveRecordById, findAllActiveRecords, findRecordByFilter } from "../utils/CRUD/crudUtils.js";
+import { createRecord, findActiveRecordById, findAllActiveRecords, findRecordByFilter, updateRecord } from "../utils/CRUD/crudUtils.js";
 
 
 export class Usuario {
@@ -97,6 +97,7 @@ export class Usuario {
     }
 
     static async findActiveByid(id) {
+
         try {
             const userByid = await findActiveRecordById('usuarios', id);
             return userByid
@@ -120,4 +121,13 @@ export class Usuario {
         }
     }
 
+    static async updateUserRecord(id, data) {
+        try {
+            const updatedUser = await updateRecord('usuarios', id, data);
+
+            return updatedUser
+        } catch (error) {
+            throw new DataBaseError(`El usuario de ID ${id} no pudo actualizarse`, error)
+        }
+    }
 };

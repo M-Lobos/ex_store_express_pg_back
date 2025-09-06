@@ -78,12 +78,12 @@ export class Validation {
         return value;
     }
 
-    /* static isDataEmptyToDataBase(columns, values) {
+    static isDataEmptyToDataBase(columns, values) {
         if (values.length <= 0 || columns.length <= 0) {
             throw new InternalServerError(`Error: no podemos crear registros vacíos`)
         }
         return { columns, values }
-    } */
+    }
 
     static responseIsEmpty(data) {
 
@@ -96,7 +96,7 @@ export class Validation {
 
         for (const key of filterKeys) {
             if (!validFields.includes(key)) {
-                throw new DataBaseError(`El campo "${key} no es válido para esta entidad`);
+                throw new DataBaseError(`El campo "${key}" no es válido para esta entidad`,);
             }
         }
     }
