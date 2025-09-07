@@ -80,7 +80,7 @@ export class Validation {
 
     static isDataEmptyToDataBase(columns, values) {
         if (values.length <= 0 || columns.length <= 0) {
-            throw new InternalServerError(`Error: no podemos crear registros vacíos`)
+            throw new InternalServerError(`Error: no podemos crear registros vacíos`, error)
         }
         return { columns, values }
     }

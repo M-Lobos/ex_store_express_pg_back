@@ -13,7 +13,7 @@ export class DataBaseError extends CustomError {
 }
 
 export class NotFoundError extends CustomError {
-    constructor(message, entity, details) {
+    constructor(message,data ,entity, details) {
         super(message || `${entity} No encontrado`, 404, details)
     }
 }
