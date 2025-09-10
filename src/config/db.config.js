@@ -16,7 +16,7 @@ const pool = new Pool({
 /**
  * query function -  excetutes, text defined as the query in the DB lang, and paramas as the data asociated to the query
  * @param {string} text - String format structure, tells the structure of the query to the DB.
- * @param {Array<any>} paramas - An array of data to be implemented in to dhe queryto to the DB
+ * @param {Array<any>} params - An array of data to be implemented in to dhe queryto to the DB
  * @returns {object} - devuelve un objeto con los detalles del ersultado de la query
  */
 

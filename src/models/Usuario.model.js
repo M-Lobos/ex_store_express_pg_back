@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { ValidationError, DataBaseError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
-import { createRecord, findActiveRecordById, findAllActiveRecords, findRecordByFilter, updateRecord } from "../utils/CRUD/crudUtils.js";
+import { createRecord, findActiveRecordById, findAllActiveRecords, findRecordByFilter, permaDeleteRecord, updateRecord } from "../utils/CRUD/crudUtils.js";
 
 
 export class Usuario {
@@ -130,4 +130,18 @@ export class Usuario {
             throw new DataBaseError(`El usuario de ID ${id} no pudo actualizarse`, error)
         }
     }
+
+    static async permaDelete(id) {
+        try {
+            const userDeleted = await permaDeleteRecord('usuarios', id)
+
+            return userDeleted
+
+        } catch (error) {
+            throw new DataBaseError(`El usuario de ID ${id} no pudo ser eliminado  de forma permanente`, error)
+        }
+    }
+
+
+
 };

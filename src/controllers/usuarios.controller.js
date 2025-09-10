@@ -5,7 +5,6 @@ import { Validation } from "../utils/validate/Validate.js"
 export const createUser = async (req, res, next) => {
     try {
         const user = await Usuario.create(req.body)
-        console.log(user)
 
         res.status(201).json({
             message: 'Usuario creado con éxito',
@@ -79,13 +78,30 @@ export const updateUserById = async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
 
-        const updatedUser = await Usuario.updateUserRecord(id, data)
+        const updatedUser = await Usuario.updateUserRecord(id, data);
 
         res.status(201).json({
             message: `Usuario actualizado con éxito`,
             status: 201,
             data: updatedUser
         })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const permaDeleteUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const userDeleted = await Usuario.permaDelete(id);
+
+        res.status(200).json({
+            message: `Usuario eliminado permanentemente con éxito`,
+            status: 200,
+            dataDeleted: userDeleted
+        });
+
     } catch (error) {
         next(error)
     }

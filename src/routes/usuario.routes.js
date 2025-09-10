@@ -4,6 +4,7 @@ import {
     findAllActiveUsers,
     findUserActiveById,
     findUserByFilters,
+    permaDeleteUserById,
     updateUserById
 } from "../controllers/usuarios.controller.js";
 import { validationMiddleware } from "../middlewares/validate.middleware.js";
@@ -16,6 +17,7 @@ router.get('/usuarios', findAllActiveUsers);
 router.get('/usuario/id/:id', findUserActiveById);
 router.get('/usuario/filters', findUserByFilters);
 router.put('/usuario/update/:id', validationMiddleware(Usuario.validate), updateUserById);
+router.delete('/usuario/admin/delete/permanent/:id', permaDeleteUserById);
 
 export default router;
 
