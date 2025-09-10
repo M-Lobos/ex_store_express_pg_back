@@ -104,7 +104,6 @@ export const findRecordByFilter = async (tableName, filters, condition) => {
     }
 }
 
-
 /**
  * Actualiza los registros de una tabla (tableName) en una DB, identificando registro por id, y reescribiendo sus valores (data)
  * @param {string} tableName    - Nombre de la tabla a actualizar
@@ -135,8 +134,8 @@ export const updateRecord = async (tableName, id, data) => {
 
 /**
  * Elimna permanentemente los datos del regristro (id) en la tabla (tableName)
- * @param {*} tableName         - Nombre de la entidad donde se desea hacer el hard delete
- * @param {*} id                - Id del registro que se desea eleminar permanentemente
+ * @param {string} tableName    - Nombre de la entidad donde se desea hacer el hard delete
+ * @param {string} id           - Id del registro que se desea eleminar permanentemente
  * @returns {Promise<Object>}   - Retorna un objeto con los datos del registro eliminado - El método DELETE no devuelve nada
  */
 export const permaDeleteRecord = async (tableName, id) => {
@@ -157,7 +156,12 @@ export const permaDeleteRecord = async (tableName, id) => {
     }
 }
 
-
+/**
+ * Elimina registro desactivando su acceso pero no lo elimina permanentemente, sino pasando el active de true a false
+ * @param {string} tableName    - Nombre de la tabla
+ * @param {string} id           - Nombre del id del registro a eliminar de forma lógica, 
+ * @returns {Promise<Object>}   - Retorna un objeto con los datos del registro eliminado de forma lógica
+ */
 
 export const softDeteleRecord = async (tableName, id) => {
 
