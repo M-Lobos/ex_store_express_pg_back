@@ -4,7 +4,7 @@ import { Validation } from "../utils/validate/Validate.js"
 
 export const createUser = async (req, res, next) => {
     try {
-        const user = await Usuario.create(req.body)
+        const user = await Usuario.createRecord(req.body)
 
         res.status(201).json({
             message: 'Usuario creado con éxito',

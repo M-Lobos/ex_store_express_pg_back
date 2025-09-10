@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { ValidationError, DataBaseError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
-import { createRecord, findActiveRecordById, findAllActiveRecords, findRecordByFilter, permaDeleteRecord, softDeteleRecord, updateRecord } from "../utils/CRUD/crudUtils.js";
+import { findActiveRecordById, findAllActiveRecords, findRecordByFilter, createRecord, updateRecord, permaDeleteRecord, softDeteleRecord } from "../utils/CRUD/index.js";
 
 
 export class Usuario {
@@ -72,7 +72,7 @@ export class Usuario {
         }
     }
 
-    static async create(data) {
+    static async createRecord(data) {
         try {
             /*   Usuario.validate(data); */
             const id = uuidv4();
