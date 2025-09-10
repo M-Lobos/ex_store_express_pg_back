@@ -106,3 +106,21 @@ export const permaDeleteUserById = async (req, res, next) => {
         next(error)
     }
 }
+
+
+export const softDeleteUserById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const userDeleted = await Usuario.softDelete(id)
+
+        res.status(200).json({
+            message: `Usuario eliminado con éxito`,
+            status: 200,
+            dataDeleted: userDeleted
+        });
+
+    } catch (error) {
+        next(error)
+    }
+}
+

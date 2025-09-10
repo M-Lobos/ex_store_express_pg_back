@@ -1,7 +1,7 @@
 import { InternalServerError } from "../../errors/TypesOfErrors.js";
 import { query } from "../../config/db.config.js";
 import { normalizeClause, parseObjectToColumnValuesArray } from "../shares/normalize.js";
-import { findUserActiveById } from "../../controllers/usuarios.controller.js";
+
 
 /**
  * Crea un nuevo registro en una tabla específica a través de un objeto
@@ -137,7 +137,7 @@ export const updateRecord = async (tableName, id, data) => {
  * Elimna permanentemente los datos del regristro (id) en la tabla (tableName)
  * @param {*} tableName         - Nombre de la entidad donde se desea hacer el hard delete
  * @param {*} id                - Id del registro que se desea eleminar permanentemente
- * @returns                     - El método DELETE no devuelve nada
+ * @returns {Promise<Object>}   - Retorna un objeto con los datos del registro eliminado - El método DELETE no devuelve nada
  */
 export const permaDeleteRecord = async (tableName, id) => {
     try {
@@ -151,31 +151,26 @@ export const permaDeleteRecord = async (tableName, id) => {
         `
         await query(deleteQuery, [id])
         return recordToDelete
-        
+
     } catch (error) {
         throw new InternalServerError(`Error al eliminar de forma permanente el dato de id ${id}`, error)
     }
 }
 
 
-export const softDetele = async (tableName, id, data) => {
-    const { columns, values } = parseObjectToColumnValuesArray(data);
-    const setClauses = normalizeClause(columns, ', ', true, 2);
+
+export const softDeteleRecord = async (tableName, id) => {
 
     try {
         const deleteQuery = `
-            DELETE FROM ${tableName}
-            SET ${setClauses}
-            WHERE id = $1 AND active = $${columns.length + 1}
+            UPDATE ${tableName}
+            SET active = false 
+            WHERE id = $1 AND active = true
             RETURNING *;
         `
 
-        console.log("query:", deleteQuery)
-
-        const { rows } = await query(deleteQuery, values)
-        console.log(rows)
-
-        return rows[0]
+        const { rows } = await query(deleteQuery, [id]);
+        return rows
 
     } catch (error) {
         throw new InternalServerError(`Error al eliminar el dato de id ${id}`, error)

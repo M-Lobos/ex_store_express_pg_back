@@ -5,6 +5,7 @@ import {
     findUserActiveById,
     findUserByFilters,
     permaDeleteUserById,
+    softDeleteUserById,
     updateUserById
 } from "../controllers/usuarios.controller.js";
 import { validationMiddleware } from "../middlewares/validate.middleware.js";
@@ -18,6 +19,7 @@ router.get('/usuario/id/:id', findUserActiveById);
 router.get('/usuario/filters', findUserByFilters);
 router.put('/usuario/update/:id', validationMiddleware(Usuario.validate), updateUserById);
 router.delete('/usuario/admin/delete/permanent/:id', permaDeleteUserById);
+router.delete('/usuario/delete/:id', softDeleteUserById);
 
 export default router;
 
