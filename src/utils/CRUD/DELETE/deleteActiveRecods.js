@@ -10,15 +10,16 @@ import { findActiveRecordById } from "../GET/getActiveRecords.js";
  */
 export const permaDeleteRecord = async (tableName, id) => {
     try {
-        const recordToDelete = findActiveRecordById(tableName, id)
-
+        /* const recordToDelete = findActiveRecordById(tableName, id) */
+        console.log("llego")
         const deleteQuery = `
-            DELETE ON CASCADE FROM ${tableName}
+            DELETE FROM ${tableName}
             WHERE id = $1
             RETURNING *;
         `
         await query(deleteQuery, [id])
-        return recordToDelete
+
+        /* return recordToDelete */
     } catch (error) {
         throw new InternalServerError(`Error al eliminar de forma permanente el dato de id ${id}`, error)
     }

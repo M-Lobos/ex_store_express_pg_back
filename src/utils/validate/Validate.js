@@ -9,6 +9,12 @@ export class Validation {
         return value
     }
 
+    static isString(value, fieldName) {
+        if (typeof value !== 'string')
+            throw new ValidationError(`El campo '${fieldName}' debe ser una cadena de texto vacía.`);
+        return value;
+    }
+
     static ValidateName(value, fieldName) {
         const regex = /^[a-zA-ZÁ-ÿñÑ\s]+$/
         if (!regex.test(value)) {
@@ -25,6 +31,13 @@ export class Validation {
         return value
     }
 
+    static isNumber(value, fieldName) {
+        const number = Number(value);
+        if (isNaN(number)) throw new ValidationError(`El campo '${fieldName}' debe ser un número`);
+
+        return number
+    }
+
     static isNumberInRange(value, min, max, fieldName) {
         const number = Number(value);
         if (isNaN(number)) throw new ValidationError(`El campo '${fieldName}' debe ser un número`);
@@ -36,9 +49,17 @@ export class Validation {
     //Para validar que los precios no sean negativos
     static isPositiveInteger(value, fieldName) {
         const number = Number(value);
-        if (!Number.isInteger(number) || number <= 0) {
+
+        console.log(`
+                ${fieldName} tipo: ${typeof value}
+                ${fieldName} tipo: ${typeof fieldName}
+            `)
+
+        if (!(Number.isInteger(number)) || number <= 0) {
             throw new ValidationError(`El campo '${fieldName}' debe ser un número entero positivo mayor a cero`)
         }
+
+        return number
     }
 
     //Para validar que el stock no sea negativo

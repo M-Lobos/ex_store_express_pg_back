@@ -38,7 +38,7 @@ export const findUserActiveById = async (req, res, next) => {
         const { id } = req.params
 
         const user = await Usuario.findActiveByid(id);
-        const userValidated = Validation.responseIsEmpty(user)
+        const userValidated = Validation.responseIsEmpty(user);
 
         res.status(200).json({
             message: `Usuario de id ${id} encontrado con éxito.`,
