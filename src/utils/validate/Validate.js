@@ -50,11 +50,6 @@ export class Validation {
     static isPositiveInteger(value, fieldName) {
         const number = Number(value);
 
-        console.log(`
-                ${fieldName} tipo: ${typeof value}
-                ${fieldName} tipo: ${typeof fieldName}
-            `)
-
         if (!(Number.isInteger(number)) || number <= 0) {
             throw new ValidationError(`El campo '${fieldName}' debe ser un número entero positivo mayor a cero`)
         }
