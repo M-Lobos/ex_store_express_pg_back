@@ -3,6 +3,7 @@ import { ValidationError, DataBaseError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
 import {
     createRecord,
+    findAllActiveRecords,
 } from "../utils/CRUD/index.js";
 
 export class Productos {
@@ -77,6 +78,16 @@ export class Productos {
             return productRecorded
         } catch (error) {
             throw new DataBaseError(`Error al registrar el producto en la base de datos`, error)
+        }
+    }
+
+    static async findAllActiveProducts(){
+        try {
+            const products = await findAllActiveRecords("productos");
+
+            return products
+        } catch (error) {
+            throw new DataBaseError(`Error al obtener todos los productos`, error)
         }
     }
 

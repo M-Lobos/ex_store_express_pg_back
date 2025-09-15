@@ -1,5 +1,6 @@
 
 import { Productos } from "../models/Producto.model.js"
+import { Validation } from "../utils/validate/Validate.js"
 
 export const createProducts = async (req, res, next) => {
     try {
@@ -15,3 +16,19 @@ export const createProducts = async (req, res, next) => {
         next(error)
     }
 }
+
+export const findAllActiveProducts = async (req, res, next) => {
+    try {
+        const products = await Productos.findAllActiveProducts();
+        const productsValidated = Validation.responseIsEmpty(products)
+
+        res.status(200).json({
+            message: 'Productos encontrados con éxito',
+            status: 200,
+            data: productsValidated
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
