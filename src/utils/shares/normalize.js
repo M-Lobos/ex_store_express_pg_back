@@ -9,11 +9,27 @@ import { Validation } from "../validate/Validate.js";
 
 export const parseObjectToColumnValuesArray = (data) => {
     try {
-        const columnsData = Object.keys(data);
-        const valuesData = Object.values(data);
+
+        const columnsData = [];
+        const valuesData = [];
+
+        Object.entries(data).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                columnsData.push(key)
+                value.forEach((val) => {
+
+                    valuesData.push(val)
+                })
+            } else {
+                columnsData.push(key)
+                valuesData.push(value)
+            }
+        })
+
+        /* const columnsData = Object.keys(data);
+        const valuesData = Object.values(data); */
 
         const { columns, values } = Validation.isDataEmptyToDataBase(columnsData, valuesData)
-
         return {
             columns, values
         }
@@ -31,15 +47,32 @@ export const parseObjectToColumnValuesArray = (data) => {
  * @returns {string}                - Retorna clausula con datos paramertizados en formato string
  */
 
-export const normalizeClause = (columns, separator, requiredKey = true, initParam = 1) => {
-
+export const normalizeClause = (columns, separator, requiredKey = true, initParam = 1, filters = {}) => {
     try {
-        let clauses = '';
-
+        /*let clauses = '';
         !requiredKey ? clauses = columns.map((_, i) => `$${i + initParam}`).join(` ${separator} `)
             : clauses = columns.map((key, index) => `${key} = $${index + initParam}`).join(` ${separator} `);
+            return clauses
+        */
+
+        let clauses = '';
+
+        if (!requiredKey) {
+            clauses = columns.map((_, index) => `$${index + initParam}`).join(` ${separator} `);
+        } else {
+            const clausesFilter = columns.map((key, index) => {
+                if (Array.isArray(filters[key]) && filters[key].length === 2) {
+                    return `${key} BETWEEN $${index + initParam} AND $${index + initParam + 1} `
+                } else {
+                    return `${key} = $${index + initParam}`;
+                }
+
+            });
+            clauses = clausesFilter.join(` ${separator} `);
+        }
 
         return clauses
+
     } catch (error) {
         throw InternalServerError(`Error al consturir la clausula para la consulta SQL`, error)
     }

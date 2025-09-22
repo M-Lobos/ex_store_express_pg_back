@@ -57,12 +57,14 @@ export const findActiveRecordById = async (tableName, id) => {
 export const findRecordByFilter = async (tableName, filters, condition) => {
     try {
         const { columns, values } = parseObjectToColumnValuesArray(filters);
-        const whereClause = normalizeClause(columns, condition, true);
+        const whereClause = normalizeClause(columns, condition, 1, true, filters);
 
         const selectQuery = `
             SELECT * FROM ${tableName}
             WHERE ${whereClause}
-        `
+        `;
+
+        console.log(selectQuery);
 
         const { rows } = await query(selectQuery, values)
         return rows;

@@ -53,6 +53,7 @@ export const findUserActiveById = async (req, res, next) => {
 export const findUserByFilters = async (req, res, next) => {
     try {
         const filters = req.query;
+
         const { condition } = req.body
 
         Validation.isValidFilter(filters, VALID_USER_FIELDS)
@@ -68,9 +69,6 @@ export const findUserByFilters = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-
-
-
 }
 
 export const updateUserById = async (req, res, next) => {

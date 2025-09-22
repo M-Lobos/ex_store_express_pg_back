@@ -3,7 +3,9 @@ import { ValidationError, DataBaseError } from "../errors/TypesOfErrors.js";
 import { Validation } from "../utils/validate/Validate.js";
 import {
     createRecord,
+    findActiveRecordById,
     findAllActiveRecords,
+    findRecordByFilter,
 } from "../utils/CRUD/index.js";
 
 export class Productos {
@@ -81,7 +83,7 @@ export class Productos {
         }
     }
 
-    static async findAllActiveProducts(){
+    static async findAllActiveProducts() {
         try {
             const products = await findAllActiveRecords("productos");
 
@@ -91,4 +93,28 @@ export class Productos {
         }
     }
 
+    static async findActiveById(id) {
+        try {
+            const product = await findActiveRecordById('productos', id);
+            return product
+        } catch (error) {
+            throw new DataBaseError(`Error al encontrar el producto de ${id} en la base datos`, error)
+
+        }
+    }
+
+
+    static async find(filters, condition) {
+        try {
+            const products = await findRecordByFilter('productos', filters, condition);
+            return products
+
+        } catch (error) {
+            throw new DataBaseError(`Error al encontrar productos a través de los filtros:
+                    ${JSON.stringify(filters)}
+                    con condición:
+                    ${condition}
+                    `, error)
+        }
+    }
 }
